@@ -4,9 +4,13 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
-public class ReadInputFile { 
-	// Use this for initialization
-    public void Read(int fileNum) {
+public class SceneGenerator: MonoBehaviour
+{
+    // Use this for initialization
+    public void Read(int fileNum)
+    {
+
+
         string strNum;
         if (fileNum < 10)
             strNum = "0" + fileNum.ToString();
@@ -14,8 +18,14 @@ public class ReadInputFile {
             strNum = fileNum.ToString();
 
         string fileName = "input" + strNum + ".txt";
-        using (var reader = new StreamReader(fileName))
+        using (StreamReader reader = new StreamReader(fileName))
         {
+
+        }
+    }
+
+    void GenerateFromFile(StreamReader reader)
+    {
             string line = reader.ReadLine();
             int spawn_n = int.Parse(line); // Get number of spavners
             for (int i = 0; i < spawn_n; ++i)
@@ -66,6 +76,9 @@ public class ReadInputFile {
             line = reader.ReadLine();
             int time = int.Parse(line);
 
-        }
+        
     }
 }
+
+
+

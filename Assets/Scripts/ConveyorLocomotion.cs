@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour {
+public class ConveyorLocomotion : MonoBehaviour {
 
     public float locomotionWidth = 0.1f;
     public float locomotionHeight = 0.1f;
+    public float locomotionSpeed = 0.1f;
 
     GameObject[] conveyors;
+    GameObject[] movables;
 
 	void Start () {
+        GetConveyors();
+        GetMovables();
 	}
 	
 	void Update () {
@@ -18,42 +22,63 @@ public class NewBehaviourScript : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        
+        GetConveyors();
+        GetMovables();
+        LocomotionTick();
     }
 
-    void GetConveyorTransforms()
+    void GetConveyors()
     {
         conveyors = GameObject.FindGameObjectsWithTag("Conveyor");
-        //conveyors = new Transform[conveyorObjects.Length];
-        //for (int i = 0; i < conveyorObjects.Length; i++)
-        //    conveyors[i] = conveyorObjects[i].transform;
+    }
+
+    void GetMovables()
+    {
+        movables = GameObject.FindGameObjectsWithTag("Movable");
     }
 
     //TODO add collision check
-    bool CoveyorValid(GameObject conveyor)
+    bool ConveyorValid(GameObject conveyor, GameObject movable)
     {
-        bool valid = true;
+        bool isValid = true;
 
         Transform conTransform = conveyor.transform;
         Vector3 conPos = conTransform.position;
 
         Vector3 leftBottom;
         Vector3 rightTop;
-        leftBottom = conPos - conTransform.right * locomotionWidth - conTransform.up * locomotionHeight;
-        rightTop = conPos + conTransform.forward * (1 - locomotionWidth) + conTransform.right * locomotionWidth + conTransform.up * locomotionHeight;
 
-        valid &= transform.position.x >= Mathf.Min(leftBottom.x, rightTop.x);
-        valid &= transform.position.x <= Mathf.Max(leftBottom.x, rightTop.x);
-        valid &= transform.position.y >= Mathf.Min(leftBottom.y, rightTop.y);
-        valid &= transform.position.y <= Mathf.Max(leftBottom.y, rightTop.y);
-        valid &= transform.position.z >= Mathf.Min(leftBottom.z, rightTop.z);
-        valid &= transform.position.z <= Mathf.Max(leftBottom.z, rightTop.z);
+        leftBottom = conPos
+                    - conTransform.right * locomotionWidth
+                    - conTransform.up * locomotionHeight;
 
-        return valid;
+        rightTop = conPos + conTransform.forward 
+                   + conTransform.right * locomotionWidth 
+                   + conTransform.up * locomotionHeight;
+
+        isValid &= movable.transform.position.x >= Mathf.Min(leftBottom.x, rightTop.x);
+        isValid &= movable.transform.position.x <= Mathf.Max(leftBottom.x, rightTop.x);
+        isValid &= movable.transform.position.y >= Mathf.Min(leftBottom.y, rightTop.y);
+        isValid &= movable.transform.position.y <= Mathf.Max(leftBottom.y, rightTop.y) + 0.6f;
+        isValid &= movable.transform.position.z >= Mathf.Min(leftBottom.z, rightTop.z);
+        isValid &= movable.transform.position.z <= Mathf.Max(leftBottom.z, rightTop.z);
+
+        if (isValid) { Debug.Log("ConveyorValid"); }
+        return isValid;
     }
 
     void LocomotionTick()
     {
-
+        foreach (GameObject movable in movables)
+        {
+            foreach (GameObject conveyor in conveyors)
+            {
+                if (ConveyorValid(conveyor, movable))
+                {
+                    movable.transform.position += conveyor.transform.forward * locomotionSpeed * Time.deltaTime;
+                    break;
+                }
+            }
+        }
     }
 }
