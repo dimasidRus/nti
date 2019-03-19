@@ -48,11 +48,11 @@ public class ConveyorLocomotion : MonoBehaviour {
         Vector3 leftBottom;
         Vector3 rightTop;
 
-        leftBottom = conPos
+        leftBottom = conPos - conTransform.forward * locomotionWidth
                     - conTransform.right * locomotionWidth
                     - conTransform.up * locomotionHeight;
 
-        rightTop = conPos + conTransform.forward 
+        rightTop = conPos + conTransform.forward  * (1 - locomotionWidth)
                    + conTransform.right * locomotionWidth 
                    + conTransform.up * locomotionHeight;
 
