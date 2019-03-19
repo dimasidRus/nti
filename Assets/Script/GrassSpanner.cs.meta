@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3ae3065a92d39f346909f6f07666e946
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - heightMap: {instanceID: 0}
+  - terrainMat: {instanceID: 0}
+  - grassMat: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
