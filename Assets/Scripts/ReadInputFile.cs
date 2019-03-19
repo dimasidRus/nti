@@ -6,7 +6,7 @@ using System.Linq;
 
 public class ReadInputFile { 
 	// Use this for initialization
-    void Read(int fileNum) {
+    public void Read(int fileNum) {
         string strNum;
         if (fileNum < 10)
             strNum = "0" + fileNum.ToString();
