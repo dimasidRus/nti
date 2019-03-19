@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour {
 
+    public float locomotionWidth;
+    public float locomotionHeight;
+
     GameObject[] conveyors;
 
 	void Start () {
@@ -27,10 +30,17 @@ public class NewBehaviourScript : MonoBehaviour {
     }
 
     //TODO add collision check
-    bool CoveyorValid(Transform conveyor)
+    bool CoveyorValid(GameObject conveyor)
     {
-        bool valid = true;
-        if ()
+        Transform conTransform = conveyor.transform;
+        Vector3 conPos = conTransform.position;
+
+        Vector3 leftBottom;
+        Vector3 rightTop;
+
+        leftBottom = conPos - conTransform.right * locomotionWidth - conTransform.up * locomotionHeight;
+        leftBottom = conPos + conTransform.forward * (1 - locomotionWidth) + conTransform.right * locomotionWidth + conTransform.up * locomotionHeight;
+
         return valid;
     }
 
