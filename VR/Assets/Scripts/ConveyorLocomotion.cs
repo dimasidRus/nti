@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour {
 
-    public float locomotionWidth;
-    public float locomotionHeight;
+    public float locomotionWidth = 0.1f;
+    public float locomotionHeight = 0.1f;
 
     GameObject[] conveyors;
 
@@ -32,14 +32,22 @@ public class NewBehaviourScript : MonoBehaviour {
     //TODO add collision check
     bool CoveyorValid(GameObject conveyor)
     {
+        bool valid = true;
+
         Transform conTransform = conveyor.transform;
         Vector3 conPos = conTransform.position;
 
         Vector3 leftBottom;
         Vector3 rightTop;
-
         leftBottom = conPos - conTransform.right * locomotionWidth - conTransform.up * locomotionHeight;
-        leftBottom = conPos + conTransform.forward * (1 - locomotionWidth) + conTransform.right * locomotionWidth + conTransform.up * locomotionHeight;
+        rightTop = conPos + conTransform.forward * (1 - locomotionWidth) + conTransform.right * locomotionWidth + conTransform.up * locomotionHeight;
+
+        valid &= transform.position.x >= Mathf.Min(leftBottom.x, rightTop.x);
+        valid &= transform.position.x <= Mathf.Max(leftBottom.x, rightTop.x);
+        valid &= transform.position.y >= Mathf.Min(leftBottom.y, rightTop.y);
+        valid &= transform.position.y <= Mathf.Max(leftBottom.y, rightTop.y);
+        valid &= transform.position.z >= Mathf.Min(leftBottom.z, rightTop.z);
+        valid &= transform.position.z <= Mathf.Max(leftBottom.z, rightTop.z);
 
         return valid;
     }
