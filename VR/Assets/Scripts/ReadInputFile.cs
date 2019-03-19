@@ -4,13 +4,17 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
-public class NewBehaviourScript : MonoBehaviour {
-
+public class ReadInputFile { 
 	// Use this for initialization
-    void ReadFileInfo() {
-        string file_n = "00"; // TODO
-        string name = "input" + file_n + ".txt";
-        using (var reader = new StreamReader(name))
+    void Read(int fileNum) {
+        string strNum;
+        if (fileNum < 10)
+            strNum = "0" + fileNum.ToString();
+        else
+            strNum = fileNum.ToString();
+
+        string fileName = "input" + strNum + ".txt";
+        using (var reader = new StreamReader(fileName))
         {
             string line = reader.ReadLine();
             int spawn_n = int.Parse(line); // Get number of spavners
@@ -64,12 +68,4 @@ public class NewBehaviourScript : MonoBehaviour {
 
         }
     }
-
-	void Start () {
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
