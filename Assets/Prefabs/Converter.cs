@@ -13,10 +13,6 @@ public class Converter : MonoBehaviour
     int neededAmount2;
     int currentAmount2;
 
-    public int resourseId3;
-    int neededAmount3;
-    int currentAmount3;
-
     public int outputId;
     int outputBuffer;
 

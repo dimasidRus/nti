@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Warehouse : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public int resourseId;
+    public int resourseAmount;
 }
