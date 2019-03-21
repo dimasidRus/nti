@@ -55,7 +55,7 @@ public class SceneGenerator : MonoBehaviour
             line = reader.ReadLine();
             float[] info = line.Split(' ').Select(x => float.Parse(x)).ToArray();
 
-            GameObject converter = Instantiate(converterPrefab, new Vector3(info[0], 0.5f, info[1]), Quaternion.LookRotation(new Vector3(-info[5], 0, info[6])));
+            GameObject converter = Instantiate(converterPrefab, new Vector3(info[0], 0.5f, info[1]), Quaternion.LookRotation(new Vector3(-info[5], 0, -info[6])));
             converter.GetComponent<Converter>().resourseId1 = (int)info[2];
             converter.GetComponent<Converter>().resourseId2 = (int)info[3];
             converter.GetComponent<Converter>().outputId = (int)info[4];
@@ -74,7 +74,7 @@ public class SceneGenerator : MonoBehaviour
             line = reader.ReadLine();
             float[] info = line.Split(' ').Select(x => float.Parse(x)).ToArray();
 
-            GameObject conveyor = Instantiate(coveyorPrefab, new Vector3(info[0], 0.5f, info[1]), Quaternion.LookRotation(new Vector3(-info[2], 0, info[3])));
+            GameObject conveyor = Instantiate(coveyorPrefab, new Vector3(info[0], 0.5f, info[1]), Quaternion.LookRotation(new Vector3(-info[2], 0, -info[3])));
 
             /* x = info[0];
              * y = info[1];

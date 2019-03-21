@@ -18,4 +18,10 @@ public class Resourse : MonoBehaviour {
         if (movement.Count > 0)
             transform.position += movement.Dequeue();
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Finish")
+            Destroy(gameObject);
+    }
 }

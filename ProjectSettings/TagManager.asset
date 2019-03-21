@@ -7,6 +7,8 @@ TagManager:
   - projectile
   - Conveyor
   - Movable
+  - Warehouse
+  - Converter
   layers:
   - Default
   - TransparentFX
