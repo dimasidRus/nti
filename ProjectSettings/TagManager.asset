@@ -9,6 +9,8 @@ TagManager:
   - Movable
   - Warehouse
   - Converter
+  - FxTemporaire
+  - GameMaster
   layers:
   - Default
   - TransparentFX
