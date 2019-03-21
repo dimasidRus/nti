@@ -30,7 +30,7 @@ public class SceneGenerator : MonoBehaviour
         {
             List<string> lines = GenerateOutput();
             WriteToFile(lines, 0);
-            Application.Quit();
+            Debug.Break();
             saved = true;
         }
         timePassed += Time.deltaTime;
@@ -127,7 +127,20 @@ public class SceneGenerator : MonoBehaviour
             result.Add(x.ToString() + " " + z.ToString() + " " + id.ToString());
         }
 
-        foreach(GameObject warehouse in GameObject.FindGameObjectsWithTag("Warehouse"))
+        Debug.Log(result.Count);
+
+        foreach (GameObject converter in GameObject.FindGameObjectsWithTag("Converter"))
+        {
+            int count = converter.GetComponent<Converter>().currentAmount1;
+            string id = converter.GetComponent<Converter>().resourseId1.ToString();
+            string x = converter.transform.position.x.ToString();
+            string z = converter.transform.position.z.ToString();
+            string temp = x + " " + z + " " + id;
+            for (int i = 0; i < count; i++)
+                result.Add(temp);
+        }
+
+        foreach (GameObject warehouse in GameObject.FindGameObjectsWithTag("Warehouse"))
         {
             int count = warehouse.GetComponent<Warehouse>().resourseAmount;
             string id = warehouse.GetComponent<Warehouse>().resourseId.ToString();
@@ -152,6 +165,7 @@ public class SceneGenerator : MonoBehaviour
         using (StreamWriter file =
             new StreamWriter("output00.txt"))
         {
+            file.WriteLine(lines.Count.ToString());
             foreach (string line in lines)
             {
                 file.WriteLine(line);
