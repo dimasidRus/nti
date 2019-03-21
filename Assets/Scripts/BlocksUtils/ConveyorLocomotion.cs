@@ -8,13 +8,16 @@ public class ConveyorLocomotion : MonoBehaviour {
     public float locomotionHeight = 0.1f;
     public float locomotionSpeed = 0.1f;
 
+    private int movementCount;
+
     GameObject[] conveyors;
     GameObject[] movables;
 
 	void Start () {
         GetConveyors();
         GetMovables();
-	}
+        movementCount = (int)(1f / Time.fixedDeltaTime) + 1;
+    }
 	
 	void Update () {
 		
@@ -38,34 +41,6 @@ public class ConveyorLocomotion : MonoBehaviour {
     }
 
     //TODO add collision check
-    bool ConveyorValid(GameObject conveyor, GameObject movable)
-    {
-        bool isValid = true;
-
-        Transform conTransform = conveyor.transform;
-        Vector3 conPos = conTransform.position;
-
-        Vector3 leftBottom;
-        Vector3 rightTop;
-
-        leftBottom = conPos - conTransform.forward * locomotionWidth
-                    - conTransform.right * locomotionWidth
-                    - conTransform.up * locomotionHeight;
-
-        rightTop = conPos + conTransform.forward  * (1 - locomotionWidth)
-                   + conTransform.right * locomotionWidth 
-                   + conTransform.up * locomotionHeight;
-
-        isValid &= movable.transform.position.x >= Mathf.Min(leftBottom.x, rightTop.x);
-        isValid &= movable.transform.position.x <= Mathf.Max(leftBottom.x, rightTop.x);
-        isValid &= movable.transform.position.y >= Mathf.Min(leftBottom.y, rightTop.y);
-        isValid &= movable.transform.position.y <= Mathf.Max(leftBottom.y, rightTop.y) + 0.6f;
-        isValid &= movable.transform.position.z >= Mathf.Min(leftBottom.z, rightTop.z);
-        isValid &= movable.transform.position.z <= Mathf.Max(leftBottom.z, rightTop.z);
-
-        if (isValid) { Debug.Log("ConveyorValid"); }
-        return isValid;
-    }
 
     void LocomotionTick()
     {
@@ -73,10 +48,14 @@ public class ConveyorLocomotion : MonoBehaviour {
         {
             foreach (GameObject conveyor in conveyors)
             {
-                if (ConveyorValid(conveyor, movable))
+                Resourse resourse = movable.GetComponent<Resourse>();
+                if (resourse.movement.Count == 0 && (conveyor.transform.position + conveyor.transform.up * 0.6f - movable.transform.position).magnitude < 0.01f)
                 {
-                    movable.transform.position += conveyor.transform.forward * locomotionSpeed * Time.deltaTime;
-                    break;
+                    Vector3 move = conveyor.transform.forward / movementCount;
+                    for (int i = 0; i < movementCount; i++)
+                    {
+                        resourse.movement.Enqueue(move);
+                    }
                 }
             }
         }

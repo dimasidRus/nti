@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Converter : MonoBehaviour
 {
-
+    private Util util;
     private BoxCollider trigger;
-    private SpawnCollider spawn;
 
     public int resourseId1;
     public int neededAmount1;
@@ -19,26 +18,32 @@ public class Converter : MonoBehaviour
     public int outputId;
     public int outputBuffer;
 
-    public GameObject resourePrefab;
+    public float spawnDelay = 1f;
+    private float timePassed = 0f;
 
+    public GameObject resoursePrefab;
 
-    void Start()
+    private void Start()
     {
-        spawn = gameObject.GetComponentInChildren<SpawnCollider>();
+        util = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Util>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
+        timePassed += Time.deltaTime;
+
         if (currentAmount1 >= neededAmount1 && currentAmount2 >= neededAmount2)
         {
             currentAmount1 -= neededAmount1;
             currentAmount2 -= neededAmount2;
             outputBuffer++;
         }
-        if (spawn.isFree)
+        if (outputBuffer > 0 && timePassed >= spawnDelay)
         {
-            Instantiate(resourePrefab, position:spawn.transform.position, rotation:spawn.transform.rotation);
+            timePassed = 0f;
+            SpawnResourse();
         }
+
     }
 
     public void RegisterTrigger(Collider other)
@@ -52,5 +57,11 @@ public class Converter : MonoBehaviour
             currentAmount2++;
 
         Destroy(otherGO);
+    }
+
+    private void SpawnResourse()
+    {
+        GameObject res = Instantiate(resoursePrefab, transform.position + transform.forward + transform.up * 0.6f, transform.rotation);
+        res.GetComponent<Resourse>().id = outputId;
     }
 }
