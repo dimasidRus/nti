@@ -5,12 +5,15 @@ using UnityEngine;
 public class Resourse : MonoBehaviour {
     public int id;
     public Queue<Vector3> movement;
+    public Color[] colors;
     private int movementCount;
+
 
     private void Start()
     {
         movementCount = (int)(1f / Time.fixedDeltaTime) + 1;
         movement = new Queue<Vector3>(movementCount);
+        gameObject.GetComponent<Renderer>().material.color = colors[id];
     }
 
     private void FixedUpdate()
