@@ -42,6 +42,7 @@ public class Converter : MonoBehaviour
         {
             timePassed = 0f;
             SpawnResourse();
+            outputBuffer--;
         }
 
     }
