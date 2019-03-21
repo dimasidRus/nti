@@ -30,7 +30,7 @@ public class SceneGenerator : MonoBehaviour
         {
             List<string> lines = GenerateOutput();
             WriteToFile(lines, 0);
-            Debug.Break();
+            Time.timeScale = 0;
             saved = true;
         }
         timePassed += Time.deltaTime;
