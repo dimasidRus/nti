@@ -127,8 +127,6 @@ public class SceneGenerator : MonoBehaviour
             result.Add(x.ToString() + " " + z.ToString() + " " + id.ToString());
         }
 
-        Debug.Log(result.Count);
-
         foreach (GameObject converter in GameObject.FindGameObjectsWithTag("Converter"))
         {
             int count = converter.GetComponent<Converter>().currentAmount1;
@@ -161,7 +159,6 @@ public class SceneGenerator : MonoBehaviour
             strNum = "0" + fileNum.ToString();
         else
             strNum = fileNum.ToString();
-        Debug.Log("Saving");
         using (StreamWriter file =
             new StreamWriter("output00.txt"))
         {
