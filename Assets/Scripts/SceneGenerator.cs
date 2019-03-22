@@ -129,10 +129,11 @@ public class SceneGenerator : MonoBehaviour
 
         foreach (GameObject converter in GameObject.FindGameObjectsWithTag("Converter"))
         {
-            int count = converter.GetComponent<Converter>().currentAmount1;
-            string id = converter.GetComponent<Converter>().resourseId1.ToString();
             string x = converter.transform.position.x.ToString();
             string z = converter.transform.position.z.ToString();
+
+            int count = converter.GetComponent<Converter>().currentAmount1;
+            string id = converter.GetComponent<Converter>().resourseId1.ToString();
             string temp = x + " " + z + " " + id;
             for (int i = 0; i < count; i++)
                 result.Add(temp);
